@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="lemay" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="View 的事件体系View 是一种界面层的控件的一种抽象，它代表着一个控件。ViewGroup 继承自 View，内部包含了许多个控件，即一组 View。这意味着 View 本身可以是单个控件也可以是多个控件组成的一组控件，即 View 树的结构。所以 View 的事件体系即控件的事件体系。 View的基础知识View的位置参数View 的位置主要由它的四个顶点来决定，分别对应于 View 的四">
+<meta property="og:type" content="article">
+<meta property="og:title" content="艺术探索笔记：View 的事件体系">
+<meta property="og:url" content="http:&#x2F;&#x2F;blog.lemayli.com&#x2F;2020&#x2F;03&#x2F;07&#x2F;%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E7%AC%94%E8%AE%B0%EF%BC%9AView-%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BD%93%E7%B3%BB&#x2F;index.html">
+<meta property="og:site_name" content="lemay">
+<meta property="og:description" content="View 的事件体系View 是一种界面层的控件的一种抽象，它代表着一个控件。ViewGroup 继承自 View，内部包含了许多个控件，即一组 View。这意味着 View 本身可以是单个控件也可以是多个控件组成的一组控件，即 View 树的结构。所以 View 的事件体系即控件的事件体系。 View的基础知识View的位置参数View 的位置主要由它的四个顶点来决定，分别对应于 View 的四">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly9zczIuYmRzdGF0aWMuY29tLzcwY0Z2blNoX1ExWW54R2twb1dLMUhGNmhoeS9pdC91PTIwNDY3MTg3NTQsNjA4ODM4NDMyJmZtPTE1JmdwPTAuanBnJTIwJTIyVmlldyUyMEhpZXJhcmNoeSUyMg?x-oss-process=image&#x2F;format,png">
+<meta property="og:updated_time" content="2020-03-07T08:00:39.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly9zczIuYmRzdGF0aWMuY29tLzcwY0Z2blNoX1ExWW54R2twb1dLMUhGNmhoeS9pdC91PTIwNDY3MTg3NTQsNjA4ODM4NDMyJmZtPTE1JmdwPTAuanBnJTIwJTIyVmlldyUyMEhpZXJhcmNoeSUyMg?x-oss-process=image&#x2F;format,png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.lemayli.com/2020/03/07/艺术探索笔记：View-的事件体系/"/>
+
+
+
+
+
+  <title>艺术探索笔记：IPC | lemay</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lemay</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.lemayli.com/2019/11/14/%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E7%AC%94%E8%AE%B0%EF%BC%9AIPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lemay">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lemay">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">艺术探索笔记：IPC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-14T23:58:03+08:00">2019-11-14</time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">10k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h1><p>线程：CPU 调度的最小单位，是一种有限的系统资源。<br>进程：一个执行单元，一般指一个程序或应用。一个进程可以有多个线程。<br>私有进程：进程名以 <strong><code>:</code></strong> 开头，不允许其他应用的组件运行在私有进程<br>全局进程：进程名以 <strong><code>.</code></strong> 开头，其他应用可以通过 ShareUID 方式，将组件运行在全局进程。</p>
+<p><strong>IPC 的方式：</strong></p>
+<ul>
+<li>Intent 传递数据</li>
+<li>SharePreference、文件、数据库存储</li>
+<li>Messager</li>
+<li>Socket</li>
+<li>AIDL</li>
+</ul>
+<h4 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h4><p>序列化的本质是数据形式的转化。<br>将内存中的数据以流的形式写入到磁盘缓存中。<br>反序列化即将磁盘缓存中的数据读出来，转化为之前的数据将结构。</p>
+<h5 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pulic class User implement Serializable &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>实现 Serializable 接口，需要指定一个 serialVersionUID。</p>
+</li>
+<li><p>反序列化时，只有反序列化数据中 serialVersionUID 与数据结构中的 serialVersionUID 一致，才能正确的执行反序列化，否则会抛出 InvalidClassException 异常。</p>
+</li>
+<li><p>当未指定 serialVersionUID 时，会根据类的结构生成 hash 值，作为 serialVersionUID。</p>
+</li>
+<li><p>若类的成员变量发生改变，hash 值就会发生改变，此时无法进行反序列化。<br>若指定了 serialVersionUID，则可以进行反序列化，尽可能的恢复数据。<br>但，若是修改了成员变量的类型或修改了类的名称，仍会反序列化失败。</p>
+</li>
+<li><p><strong>静态成员变量不会参与序列化</strong></p>
+</li>
+<li><p><strong>使用 transient 关键字标记的成员变量不会参与序列化</strong></p>
+</li>
+</ul>
+<h6 id="Serializable-反序列化时调用了-ObjectInputStream-readObject-内部使用了反射，产生大量临时对象，效率低"><a href="#Serializable-反序列化时调用了-ObjectInputStream-readObject-内部使用了反射，产生大量临时对象，效率低" class="headerlink" title="Serializable 反序列化时调用了 ObjectInputStream.readObject 内部使用了反射，产生大量临时对象，效率低"></a><strong>Serializable 反序列化时调用了 ObjectInputStream.readObject 内部使用了反射，产生大量临时对象，效率低</strong></h6><h5 id="Parcelable"><a href="#Parcelable" class="headerlink" title="Parcelable"></a>Parcelable</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class User implement Parcelable &#123;</span><br><span class="line">	public int describeContents() &#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	public void writeParcel(Parcel out, int flags) &#123;</span><br><span class="line">		// out.writeInt(userId);</span><br><span class="line">	&#125;</span><br><span class="line">	public static final Parcelable.CREATOR&lt;User&gt; CREATOR = new Parcelable.CREATOR&lt;User&gt;(&#123;</span><br><span class="line">		Creator&lt;User&gt; &#123;</span><br><span class="line">			public User createFromParcel(Parcel in) &#123;</span><br><span class="line">				return new User(in);</span><br><span class="line">			&#125;</span><br><span class="line">			public User[] newArray(int size) &#123;</span><br><span class="line">				return new User[size];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		private User(Parcel in) &#123;</span><br><span class="line">			// userId = in.readInt();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>序列化由 writeParcel 完成</li>
+<li>反序列化由 CREATOR 完成</li>
+<li>内容描述由 describeContents 完成，默认返回 0，仅当对象中有文件描述符时返回 1.</li>
+</ul>
+<h6 id="Parcelable-实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高"><a href="#Parcelable-实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高" class="headerlink" title="Parcelable 实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高"></a><strong>Parcelable 实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高</strong></h6><p><strong>内存中传递使用 Parcelable，持久化存储和网络传输使用 Serializable</strong></p>
+<hr>
+<h3 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h3><p>由于Bundle 实现了 Parcelable 借口，所以 Activity、Service、Receiver 都支持在 Intent 中传递 Bundle 数据进行（进程间）通讯。我们可以在 Bundle 中附加能够被序列化的信息，如基本数据类型（已实现 Serializable）、Parcelable  对象、Serializable 对象等。</p>
+<h3 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h3><p>因为 Android 系统基于 Linux，所以可以无限制的对文件进行并发读/写操作，通过多个进程对同一文件进行交换数据也可以达到进程间通信的目的。<br>SharePreferences、数据库等存储方案本质上仍是文件的一种。由于 Android 系统对 SharePreferences 的读/写有一定的缓存策略，即内存中会有一份 SharePreferences 的缓存，所以多进程下系统对它的读写变得不在可靠，因此，不建议使用。</p>
+<hr>
+<h3 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h3><p>Binder 是 Android 中的一种跨进程通讯方式，是 ServiceManager 连接 Manager 与 ManagerService 的桥梁，是客户端与服务端进行通信的媒介。<br>Binder 主要应用于 AIDL 和 Messager。</p>
+<h4 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h4><p><img src="https://img-blog.csdnimg.cn/20200223185753260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI3OTY1MTIx,size_16,color_FFFFFF,t_70" alt="IMyAidlInterface.png"></p>
+<h6 id="DESCRIPTOR"><a href="#DESCRIPTOR" class="headerlink" title="DESCRIPTOR"></a>DESCRIPTOR</h6><p>Binder 的唯一标识，一般使用 Binder 的类名表示。</p>
+<h6 id="asInterface-IBinder-obj"><a href="#asInterface-IBinder-obj" class="headerlink" title="asInterface(IBinder obj)"></a>asInterface(IBinder obj)</h6><p>将服务端 Binder 对象转换为客户端 AIDL 接口类型的对象。<br>如果客户端和服务端在同一进程，返回值为 Stub本身，否则返回 Stub.proxy 对象。</p>
+<h6 id="asBinder"><a href="#asBinder" class="headerlink" title="asBinder"></a>asBinder</h6><p>返回当前 Binder 对象。</p>
+<h6 id="onTransact-int-code-Parcel-data-Parcel-reply-int-flags"><a href="#onTransact-int-code-Parcel-data-Parcel-reply-int-flags" class="headerlink" title="onTransact(int code, Parcel data, Parcel reply, int flags)"></a>onTransact(int code, Parcel data, Parcel reply, int flags)</h6><ul>
+<li>code: TRANSACT 类型，用来确定所请求的目标方法</li>
+<li>data: 目标方法所需的参数。</li>
+<li>reply: 如果目标方法有返回值，向 reply 写入返回值。</li>
+<li>flags: –<br>返回值为 false 时，表示客户端的请求失败，可以用来做权限校验。<h6 id="Proxy-basicTypes"><a href="#Proxy-basicTypes" class="headerlink" title="Proxy.basicTypes"></a>Proxy.basicTypes</h6>通过 <code>Parce.obtain()</code> 方法创建输入型对象 _data、输出型对象 _reply；将函数入参、DESCRIPTOR 写入 _data；通过 Binder 对象调用 transact 方法，将 TRANSACT 类型、_data,_reply 传入服务端进行处理之后，从 _reply 中取出返回结果。   </li>
+</ul>
+<p><strong>从客户端发起请求开始，直至服务端返回数据，客户端当前线程会一直处于挂起状态，所以耗时操作需要做线程切换处理。</strong></p>
+<h5 id="unlinkToDeath"><a href="#unlinkToDeath" class="headerlink" title="unlinkToDeath"></a>unlinkToDeath</h5><p>在客户端声明一个 DeathRecipient 对象，在 binderDied 函数内部对 Binder 进行移除绑定（并重新绑定）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deathRecipient = IBinder.DeathRecipient &#123;</span><br><span class="line">    @Override</span><br><span class="line">    fun binderDied() &#123;</span><br><span class="line">		// Binder 死亡时，会回调该方法</span><br><span class="line">        deathRecipient?.apply &#123;</span><br><span class="line">            serviceInterface?.asBinder()?.unlinkToDeath(this, 0)</span><br><span class="line">            serviceInterface = null</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="linkToDeath"><a href="#linkToDeath" class="headerlink" title="linkToDeath"></a>linkToDeath</h5><p>客户端绑定远程服务后，为 Binder 设置死亡代理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">val connection = object : ServiceConnection &#123;</span><br><span class="line">    override fun onServiceConnected(name: ComponentName, service: IBinder) &#123;</span><br><span class="line">        serviceInterface = IMyAidlInterface.Stub.asInterface(service)</span><br><span class="line">        try &#123;</span><br><span class="line">            // 对 Binder 对象设置死亡代理，可以通过 Binder.isBinderAlive 函数判断 Binder 是否存活</span><br><span class="line">            deathRecipient?.apply &#123; service.linkToDeath(this, 0) &#125;</span><br><span class="line">            serviceInterface?.basicTypes(0, 1, true, 3f, 4.0, &quot;5&quot;)</span><br><span class="line">            serviceInterface?.sum(1, 2)</span><br><span class="line">        &#125; catch (e: RemoteException) &#123;</span><br><span class="line">            e.printStackTrace()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Messenger"><a href="#Messenger" class="headerlink" title="Messenger"></a>Messenger</h4><p>Messenger 的底层实现是 AIDL。它实际上是对 AIDL 进行了封装，通过 Message 对象在进程间传输数据，Message 中能使用的载体只有 what、arg1、arg2、Bundle 以及 replyTo。Messenger 一次只会处理一个请求，所以服务端不会处理并发请求，不用考虑线程同步的问题。</p>
+<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><p>Socket 即“套接字”，它是计算机之间进行通信的一种方式，因此我们也可以通过 Socket 实现进程间的通信。Socket 分为 流式套接字（TCP）、数据报套接字（UDP），可以用来传输任意字节流。<br>Socket 在使用时需要网络权限，且不能在主线程中使用，与在 Android 设备中进行网络请求是相同的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lemay
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://blog.lemayli.com/2019/11/14/%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E7%AC%94%E8%AE%B0%EF%BC%9AIPC/" title="艺术探索笔记：IPC">http://blog.lemayli.com/2019/11/14/%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E7%AC%94%E8%AE%B0%EF%BC%9AIPC/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/14/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/07/%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E7%AC%94%E8%AE%B0%EF%BC%9AView-%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BD%93%E7%B3%BB/" rel="prev" title="艺术探索笔记：View 的事件体系">
+                艺术探索笔记：View 的事件体系 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lemay</p>
+              <p class="site-description motion-element" itemprop="description">lemay</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IPC"><span class="nav-number">1.</span> <span class="nav-text">IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#序列化与反序列化"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">序列化与反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Serializable"><span class="nav-number">1.0.0.1.1.</span> <span class="nav-text">Serializable</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Serializable-反序列化时调用了-ObjectInputStream-readObject-内部使用了反射，产生大量临时对象，效率低"><span class="nav-number">1.0.0.1.1.1.</span> <span class="nav-text">Serializable 反序列化时调用了 ObjectInputStream.readObject 内部使用了反射，产生大量临时对象，效率低</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Parcelable"><span class="nav-number">1.0.0.1.2.</span> <span class="nav-text">Parcelable</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Parcelable-实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高"><span class="nav-number">1.0.0.1.2.1.</span> <span class="nav-text">Parcelable 实现原理是在内存中建立一块共享数据块，序列化和反序列化均是操作这一块的数据。效率高</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bundle"><span class="nav-number">1.0.1.</span> <span class="nav-text">Bundle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件共享"><span class="nav-number">1.0.2.</span> <span class="nav-text">文件共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder"><span class="nav-number">1.0.3.</span> <span class="nav-text">Binder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AIDL"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">AIDL</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#DESCRIPTOR"><span class="nav-number">1.0.3.1.0.1.</span> <span class="nav-text">DESCRIPTOR</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#asInterface-IBinder-obj"><span class="nav-number">1.0.3.1.0.2.</span> <span class="nav-text">asInterface(IBinder obj)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#asBinder"><span class="nav-number">1.0.3.1.0.3.</span> <span class="nav-text">asBinder</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#onTransact-int-code-Parcel-data-Parcel-reply-int-flags"><span class="nav-number">1.0.3.1.0.4.</span> <span class="nav-text">onTransact(int code, Parcel data, Parcel reply, int flags)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Proxy-basicTypes"><span class="nav-number">1.0.3.1.0.5.</span> <span class="nav-text">Proxy.basicTypes</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#unlinkToDeath"><span class="nav-number">1.0.3.1.1.</span> <span class="nav-text">unlinkToDeath</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#linkToDeath"><span class="nav-number">1.0.3.1.2.</span> <span class="nav-text">linkToDeath</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Messenger"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Messenger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Socket</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lemay</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">13k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点总阅读次数">12 mins.</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
